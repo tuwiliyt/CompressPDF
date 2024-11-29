@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,165 +8,45 @@
     content="Free, In-browser, Privacy friendly PDF Compressor. Your files doesn't leave your browser." />
   <link rel="shortcut icon" type="image/x-icon" href="compresspdf-favicon.ico" />
   <link rel="icon" type="image/x-icon" href="compresspdf-favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <script defer src="js/pdfkit-standalone-0.10.0.js"></script>
   <script defer src="js/blob-stream-0.1.3.js"></script>
   <script src="js/pdf.min-2.5.207.js"></script>
   <script src="js/FileSaver.min-2.0.4.js"></script>
   <script src="js/sortable.min.1.10.2.js"></script>
-</head>
-
-<body>
   <style>
     body {
-      margin: 0;
-      background-color: #fefefe;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23ff6347' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
-    }
-
-    #main_container {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      font-family: Consolas, SFMono-Regular, Liberation Mono, Menlo, monospace;
-    }
-
-    #pdf_input_container {
-      height: max-content;
-      margin: 10px;
-      align-self: center;
-    }
-
-    #range_container {
-      display: inline-block;
-      height: max-content;
-      align-self: center;
-      margin: 10px;
-    }
-
-    #compress_pdf_container {
-      height: max-content;
-      align-self: center;
-      margin: 10px;
-    }
-
-    #compress_input_output {
-      display: inline-block;
-      width: 25px;
-      max-width: 25px;
-      margin-left: 5px;
-      margin-right: 5px;
-    }
-
-    #compress_pdf {
-      border: 1px solid rgba(255, 99, 71, 0.5);
-      background: rgba(255, 99, 71, 0.2);
-      padding: 5px;
-      outline: none;
-      animation: none;
-    }
-
-    #selected_pdf_container {
-      height: max-content;
-      margin: 10px;
-      align-self: center;
-    }
-
-    #pdf_input {
-      outline: none;
-      font-family: Consolas, SFMono-Regular, Liberation Mono, Menlo, monospace;
-    }
-
-    #pdf_input::-webkit-file-upload-button {
-      border-radius: 10px;
-      border: 1px solid rgba(255, 99, 71, 0.5);
-      outline: none;
-      background: rgba(255, 99, 71, 0.2);
-      font-family: Consolas, SFMono-Regular, Liberation Mono, Menlo, monospace;
-    }
-
-    #pdf_input::-webkit-file-upload-button:hover {
-      transform: translateY(-0.75px);
-    }
-
-    .handle {
-      cursor: grab;
-      content: url("res/ic_fluent_drag_24_regular.svg");
-      vertical-align: middle;
-    }
-
-    .list {
-      list-style: none;
-      width: max-content;
-      text-align: center;
-      align-content: center;
-    }
-
-    .ghost-class {
-      background-color: rgba(255, 99, 71, 0.5);
-      border-radius: 5px;
-      width: max-content;
-    }
-
-    @keyframes loading {
-      0% {
-        border: 2px solid #4285f4;
-        color: #4285f4;
-        box-shadow: 0px 1px 10px 1px rgba(66, 133, 244, 0.5);
-      }
-
-      33% {
-        border: 2px solid #db4437;
-        color: #db4437;
-        box-shadow: 0px 1px 10px 1px rgba(219, 68, 55, 0.5);
-      }
-
-      66% {
-        border: 2px solid #f4b400;
-        color: #f4b400;
-        box-shadow: 0px 1px 10px 1px rgba(244, 160, 0, 0.5);
-      }
-
-      100% {
-        border: 2px solid #0f9d58;
-        color: #0f9d58;
-        box-shadow: 0px 1px 10px 1px rgba(15, 157, 88, 0.5);
-      }
-    }
-
-    button {
-      border-radius: 15px;
-      font-family: Consolas, SFMono-Regular, Liberation Mono, Menlo, monospace;
-    }
-
-    button:disabled {
-      color: black;
-    }
-
-    button:hover {
-      box-shadow: 0px 1px 7px 1px rgba(255, 99, 71, 0.25);
-      transform: translateY(-0.75px);
+      font-family: 'Poppins', sans-serif;
     }
   </style>
-  <div id="main_container">
-    <div id="pdf_input_container">
-      <input id="pdf_input" type="file" accept="application/pdf" multiple />
-    </div>
-    <div id="selected_pdf_container">
-      <div id="selected_pdf_list" title="Hold and drag the handle to order the output PDF pages"></div>
-    </div>
-    <div id="range_container">
-      <input id="compress_input" title="Compression Ratio" type="range" min="0" max="1" value="0.5" step="0.1" />
-      <p id="compress_input_output" title="Higher the Value, Better the Compression">
-        0.5
-      </p>
-    </div>
-    <div id="compress_pdf_container">
-      <button id="compress_pdf" title="Compress and Combine selected PDF files in Specified order">
-        Compress PDF
-      </button>
+</head>
+
+<body class="bg-gradient-to-r from-purple-300 via-pink-300 to-red-300 min-h-screen flex items-center justify-center">
+  <div class="flex flex-col items-center justify-center p-4 space-y-4 bg-white rounded-lg shadow-lg w-full max-w-lg">
+    <h1 class="text-4xl font-bold text-purple-700 mb-4 text-center">Tolopani Kompres PDF</h1>
+    <div id="main_container" class="flex flex-col items-center justify-center space-y-4 w-full">
+      <div id="pdf_input_container" class="flex flex-col items-center w-full">
+        <input id="pdf_input" type="file" accept="application/pdf" multiple class="p-2 border border-purple-500 bg-purple-100 rounded-md cursor-pointer hover:bg-purple-200 transition duration-300 w-full" />
+      </div>
+      <div id="selected_pdf_container" class="flex flex-col items-center w-full">
+        <ul id="selected_pdf_list" title="Hold and drag the handle to order the output PDF pages" class="list-none text-center w-full"></ul>
+      </div>
+      <div id="range_container" class="flex flex-col items-center w-full">
+        <input id="compress_input" title="Compression Ratio" type="range" min="0" max="1" value="0.5" step="0.1" class="w-full" />
+        <p id="compress_input_output" title="Higher the Value, Better the Compression" class="mt-2">
+          0.5
+        </p>
+      </div>
+      <div id="compress_pdf_container" class="flex flex-col items-center w-full">
+        <button id="compress_pdf" title="Compress and Combine selected PDF files in Specified order" class="p-2 border border-purple-500 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition duration-300 w-full">
+          Compress PDF
+        </button>
+      </div>
     </div>
   </div>
-  <div style="max-width: 0px; max-height: 0px; overflow: hidden">
+  <div class="hidden">
     <canvas id="page_canvas"></canvas>
   </div>
 
@@ -198,14 +77,13 @@
 
     function resetAll() {
       resetTempArrays();
-      //clearPDFList();
       resetLoading();
     }
 
     function addFileEntry(file_name) {
       var list = document.getElementById("selected_pdf_list");
       var entry = document.createElement("li");
-      entry.style = "list-style: none; font-size: x-small;";
+      entry.className = "flex items-center space-x-2 text-xs";
       var img = new Image();
       img.classList.add("handle");
       entry.append(img);
@@ -246,13 +124,9 @@
     var quality_input = document.getElementById("compress_input");
     quality_input.addEventListener("input", onQualityInput);
 
-    // var tenet_pdf = document.getElementById("tenet");
-    // tenet_pdf.addEventListener("click", processImageData);
-
     function onQualityInput() {
       input_quality_ui = Number(this.value);
       var output_quality = document.getElementById("compress_input_output");
-      // output_quality.value = input_quality_ui;
       output_quality.innerText = input_quality_ui;
       input_quality = 1 - input_quality_ui;
     }
@@ -297,7 +171,6 @@
         input_file_names.push(this.files[j]["name"]);
       }
 
-      // console.log(ordered_input_files);
       generateFileList();
     }
 
@@ -348,9 +221,7 @@
       }
 
       var finalIndex = compareFileLists(input_file_names, sorted_file_names);
-      // ordered_input_files = sortFiles(ordered_input_files, finalIndex);
       ordered_index = Array.from(finalIndex);
-      // console.log(ordered_index);
     }
 
     function clearPDFList() {
@@ -383,7 +254,6 @@
     function sortFileList() {
       if (!sorted) {
         var sorted_files = sortFiles(ordered_input_files, ordered_index);
-        // console.log(sorted_files);
         ordered_input_files = Array.from(sorted_files);
         sorted = true;
       }
@@ -398,8 +268,6 @@
       setLoading();
 
       sortFileList();
-
-      // console.log(ordered_input_files);
 
       var file = getFileToProcessed();
 
@@ -492,13 +360,8 @@
       }
     }
 
-    /**
-     * Get page info from document, resize canvas accordingly, and render page.
-     * @param num Page number.
-     */
     function renderPage(num) {
       pageRendering = true;
-      // Using promise to fetch the page
       pdfDoc.getPage(num).then(function (page) {
         var viewport = page.getViewport({
           scale: pageScale
@@ -506,14 +369,12 @@
         canvas.height = viewport.height;
         canvas.width = viewport.width;
 
-        // Render PDF page into canvas context
         var renderContext = {
           canvasContext: ctx,
           viewport: viewport,
         };
         var renderTask = page.render(renderContext);
 
-        // Wait for rendering to finish
         renderTask.promise.then(function () {
           data = canvas.toDataURL(pageFormat, pageQuality);
 
@@ -522,14 +383,12 @@
           pageRendering = false;
 
           if (pageNumPending !== null && pageNumPending.length != 0) {
-            // New page rendering is pending
             renderPage(pageNumPending.shift());
           } else {
             if (Object.keys(imgData).length == pageCount) {
               tenet.push(JSON.parse(JSON.stringify(imgData)));
               console.log("Rendering complete");
               checkFileProcessProgress();
-              //processImageData();
             }
           }
         });
@@ -538,10 +397,6 @@
       console.log("Processing page: " + num);
     }
 
-    /**
-     * If another page rendering in progress, waits until the rendering is
-     * finised. Otherwise, executes rendering immediately.
-     */
     function queueRenderPage(num) {
       if (pageRendering) {
         pageNumPending.push(num);
